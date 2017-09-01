@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MonthlyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66e447b5-5568-452f-81d5-dde1ca7efa6f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="transtype" class="java.lang.String"/>
+	<parameter name="startdate" class="java.lang.String"/>
+	<parameter name="enddate" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM mim_transactions WHERE trans_type = $P{transtype} AND trans_date >= $P{startdate} AND trans_date <= $P{enddate}]]>
+	</queryString>
+	<field name="TRANS_ID" class="java.lang.String"/>
+	<field name="TRANS_DATE" class="java.sql.Timestamp"/>
+	<field name="TRANS_TYPE" class="java.lang.String"/>
+	<field name="PAYMENT_TYPE" class="java.lang.String"/>
+	<field name="CHEQUE_NO" class="java.lang.String"/>
+	<field name="TRANS_TAX" class="java.math.BigDecimal"/>
+	<field name="TRANS_AMOUNT" class="java.math.BigDecimal"/>
+	<variable name="netamount" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{TRANS_AMOUNT}]]></variableExpression>
+	</variable>
+	<group name="TRANS_TYPE">
+		<groupExpression><![CDATA[$F{TRANS_TYPE}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="397" y="0" width="158" height="20" uuid="22c97453-b1e2-4b48-a681-b67cb8d7e1dd"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="285" height="41" uuid="987b531e-f9e0-4bb1-9bfb-2942c657576f"/>
+				<textElement>
+					<font size="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{transtype}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="117" height="20" uuid="d0010b11-055d-4f91-a196-b8a602b7d11a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="0" width="120" height="20" uuid="fa70cc71-4f79-4d20-81ef-6dc6228777c1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="0" width="65" height="35" uuid="3bf07bb8-ba6c-4963-90cf-e2c4c9d421f7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="0" width="108" height="20" uuid="6cbdd155-107d-4723-8bcf-97bbd6c92307"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cheque No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="45" height="20" uuid="7bd0028b-844f-4aeb-963f-8861161165c1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="8eb065f0-c190-4ff3-bc3b-bea817fd863a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="117" height="20" uuid="1b246325-239b-4a10-b040-846b12d8ac3f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANS_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="0" width="120" height="20" uuid="a241d16f-5ffe-4648-a41c-5c4dc3ee9665"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANS_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="237" y="0" width="65" height="20" uuid="94bb961f-3da9-401d-ab1b-1fad1b2bee26"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAYMENT_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="108" height="20" uuid="05a5d119-95c3-4931-868b-b1a6b37d7e86"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHEQUE_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="45" height="20" uuid="a4fbf508-01bb-4e03-b677-f2791ee4b853"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANS_TAX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="7620021b-ef72-4684-9a11-27fb44aae375"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANS_AMOUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="380" y="0" width="75" height="20" uuid="40129fd5-94d4-4955-a6ff-46e8616e3915"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Amount:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="7efcd737-ec2e-45e2-8067-0f1b6cacdba4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{netamount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="117" height="20" uuid="2dc255dd-c92a-4ce3-9ef5-d9e5c5931210"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="7" splitType="Stretch"/>
+	</summary>
+</jasperReport>
